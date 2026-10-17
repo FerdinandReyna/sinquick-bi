@@ -28,7 +28,7 @@ se prueba con tSQLt y pytest.
 |---|---|
 | `database/SINQuick.DB` | Proyecto de base de datos (compila a DACPAC) |
 | `database/datos-referencia` | Catálogo inicial de productos y asesores |
-| `database/demo` | `SINQuick_Demo.sql`: base completa con datos simulados (2023–2026) para Power BI, y su generador |
+| `database/demo` | `SINQuick_Demo.sql`: base completa con datos (2023–2026) para Power BI, y su generador |
 | `etl` | Guía del paquete SSIS y alternativa para SQL Server Express |
 | `powerbi` | Medidas DAX y guía del informe |
 | `tests/tsqlt` | Pruebas unitarias de las reglas de negocio |
