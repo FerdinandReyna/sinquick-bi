@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.Build.Sql/1.0.0">
+  <!--
+    Proyecto de base de datos de SIN-Quick (SDK de proyectos SQL).
+    Se compila con:  dotnet build SINQuick.DB.sqlproj -c Release
+    y produce SINQuick.DB.dacpac, que SqlPackage publica en cada entorno.
+    También se abre en Visual Studio 2022 (SQL Server Data Tools).
+  -->
+  <PropertyGroup>
+    <Name>SINQuick.DB</Name>
+    <DSP>Microsoft.Data.Tools.Schema.Sql.Sql160DatabaseSchemaProvider</DSP>
+    <DefaultCollation>Modern_Spanish_CI_AS</DefaultCollation>
+    <TreatTSqlWarningsAsErrors>False</TreatTSqlWarningsAsErrors>
+  </PropertyGroup>
+  <ItemGroup>
+    <PostDeploy Include="Scripts\PostDeployment.sql" />
+  </ItemGroup>
+</Project>

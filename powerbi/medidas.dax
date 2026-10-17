@@ -1,0 +1,60 @@
+// Medidas del modelo semántico de SIN-Quick (Power BI Desktop)
+// Tablas importadas desde las vistas del esquema rpt:
+//   Ventas      = rpt.vw_VentasDetalle
+//   Calendario  = rpt.vw_Calendario   (marcar como tabla de fechas, columna fecha)
+//   Inventario  = rpt.vw_InventarioAlertas
+//   Clientes    = rpt.vw_ClientesRenovacion
+//   Campanias   = rpt.vw_CampaniasResultado
+//   Cargas      = rpt.vw_CargasResumen
+//   Rechazos    = rpt.vw_RechazosPorCarga
+// Relaciones: Calendario[fecha] 1 → * Ventas[fecha]
+//             Calendario[fecha] 1 → * Campanias[fechaGeneracion]
+//             Calendario[fecha] 1 → * Cargas[fecha]
+
+Ventas = SUM ( Ventas[ingreso] )
+
+Costo = SUM ( Ventas[costo] )
+
+Margen bruto = SUM ( Ventas[margen] )
+
+Margen % = DIVIDE ( [Margen bruto], [Ventas] )
+
+Facturas = DISTINCTCOUNT ( Ventas[numeroFactura] )
+
+Ticket promedio = DIVIDE ( [Ventas], [Facturas] )
+
+Ventas mes anterior = CALCULATE ( [Ventas], DATEADD ( Calendario[fecha], -1, MONTH ) )
+
+Variación vs mes anterior % = DIVIDE ( [Ventas] - [Ventas mes anterior], [Ventas mes anterior] )
+
+Ventas mismo mes año anterior = CALCULATE ( [Ventas], SAMEPERIODLASTYEAR ( Calendario[fecha] ) )
+
+Productos bajo el mínimo = CALCULATE ( COUNTROWS ( Inventario ), Inventario[bajoMinimo] = TRUE () )
+
+Productos sin movimiento = CALCULATE ( COUNTROWS ( Inventario ), Inventario[sinMovimiento] = TRUE () )
+
+Capital inmovilizado = CALCULATE ( SUM ( Inventario[valorEnBodega] ), Inventario[sinMovimiento] = TRUE () )
+
+Clientes por renovar = CALCULATE ( COUNTROWS ( Clientes ), Clientes[cicloVencido] = TRUE () )
+
+Clientes contactables = CALCULATE ( COUNTROWS ( Clientes ), Clientes[cicloVencido] = TRUE (), Clientes[contactable] = TRUE () )
+
+// ---- Campañas de renovación
+Clientes en campaña = COUNTROWS ( Campanias )
+
+Contactados = CALCULATE ( COUNTROWS ( Campanias ), Campanias[resultado] <> "SIN CONTACTO" )
+
+Compras por campaña = CALCULATE ( COUNTROWS ( Campanias ), Campanias[convirtio] = TRUE () )
+
+Conversión % = DIVIDE ( [Compras por campaña], [Contactados] )
+
+Venta generada por campañas = SUM ( Campanias[ventaGenerada] )
+
+// ---- Calidad de datos (carga nocturna)
+Cargas = COUNTROWS ( Cargas )
+
+Cargas fallidas = CALCULATE ( COUNTROWS ( Cargas ), Cargas[resultado] = "FALLIDA" )
+
+Registros rechazados = SUM ( Cargas[registrosRechazados] )
+
+% de rechazo = DIVIDE ( SUM ( Cargas[registrosRechazados] ), SUM ( Cargas[registrosProcesados] ) )

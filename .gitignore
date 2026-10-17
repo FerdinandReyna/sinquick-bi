@@ -1,0 +1,27 @@
+# Compilados y artefactos
+database/**/bin/
+database/**/obj/
+etl/**/bin/
+etl/**/obj/
+artefactos/
+reportes/
+
+# Visual Studio
+.vs/
+*.user
+*.suo
+*.dtproj.user
+
+# Power BI: el .pbix se versiona, la caché local no
+*.pbix.bak
+
+# Herramientas de terceros (se descargan, no se versionan)
+tools/tSQLt/*.sql
+
+# Python
+__pycache__/
+.pytest_cache/
+
+# Secretos
+*.env
+*.pfx

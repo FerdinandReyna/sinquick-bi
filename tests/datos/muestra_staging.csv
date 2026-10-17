@@ -1,0 +1,4 @@
+numeroFactura,fechaHora,telefonoCliente,nombreCliente,usuarioAsesor,referencia,cantidad,precioUnitario,descuento,anulada,esGarantia
+STG-0001,2026-09-28 10:15:00,50255512001,Ana Lucía Barrios,asesor1,ARM-RB3025,1,520,0,0,0
+STG-0001,2026-09-28 10:15:00,50255512001,Ana Lucía Barrios,asesor1,LG-MONO,1,650,0,0,0
+STG-0002,2026-09-28 16:40:00,,,asesor2,LC-ACV-M,2,180,0,0,0
